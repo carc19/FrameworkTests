@@ -77,11 +77,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LeanFtTest.cs" />
+    <Compile Include="Tests\LoginTest.cs" />
     <Compile Include="UnitTestClassBase.cs" />
     <None Include="App.config" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Modèles\Modèles.csproj">
+      <Project>{c69e9676-e286-422f-94e2-ea56241295b8}</Project>
+      <Name>Modèles</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
