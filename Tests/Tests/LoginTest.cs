@@ -3,11 +3,12 @@ using NUnit.Framework;
 using HP.LFT.SDK;
 using HP.LFT.Verifications;
 using Modèles.Models;
+using Modèles.Models.Page;
 using HP.LFT.SDK.Web;
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace Tests
+namespace Tests.Tests
 {
     [TestFixture]
     public class LoginTest : UnitTestClassBase
@@ -16,8 +17,7 @@ namespace Tests
         private const string SITE = "Renaud-Bray";
         private const string FIRSTNAME = "Test";
         private const string LASTNAME = "Stage";
-
-        IBrowser OBrowser;
+        
         LoginPage lp = new LoginPage();
         Excel excel = new Excel();
         User user = new User();
@@ -26,7 +26,7 @@ namespace Tests
         public void TestFixtureSetUp()
         {
             // Setup once per fixture
-            OBrowser = BrowserFactory.Launch(BrowserType.InternetExplorer);
+            SolutionBrowser.LaunchBrowser();
         }
 
         [SetUp]
@@ -36,45 +36,44 @@ namespace Tests
         }
 
         [Test, Order(1)]
-        public void LaunchSite()
-        {
-            OBrowser.Navigate("http://www.renaud-bray.com");
-            lp.GetCurrentBrowser(OBrowser);
-        }
-
-        [Test, Order(2)]
         public void LoginLinkClick()
         {
+            SolutionBrowser._browser.Sync();
             lp.LoginLink.Click();
         }
 
-        [Test, Order(3)]
+        [Test, Order(2)]
         public void GetUserInfos()
         {
             user = excel.GetUserFromName(FILE_PATH, SITE, FIRSTNAME, LASTNAME);
         }
 
-        [Test, Order(4)]
+        [Test, Order(3)]
         public void UsernameSet()
         {
+            SolutionBrowser._browser.Sync();
             lp.UsernameEditField.SetValue(user.Email);
         }
 
-        [Test, Order(5)]
+        [Test, Order(4)]
         public void PasswordSet()
         {
+            SolutionBrowser._browser.Sync();
             lp.PasswordEditField.SetValue(user.Pwd);
         }
 
-        [Test, Order(6)]
+        [Test, Order(5)]
         public void LoginButtonClick()
         {
+            SolutionBrowser._browser.Sync();
             lp.LoginButton.Click();
         }
 
-        [Test, Order(7)]
+        [Test, Order(6)]
         public void CheckLogIn()
         {
+            SolutionBrowser._browser.Sync();
+
             string welcome = lp.CheckLogIn(FIRSTNAME, LASTNAME).InnerText;
             var regex = "^Bonjour\\s" + user.FirstName + "\\s" + LASTNAME;
 

@@ -78,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Tests\LoginTest.cs" />
+    <Compile Include="Tests\SearchTest.cs" />
     <Compile Include="UnitTestClassBase.cs" />
     <None Include="App.config" />
     <Compile Include="Properties\AssemblyInfo.cs" />

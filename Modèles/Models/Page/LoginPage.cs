@@ -5,15 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Modèles.Models
+namespace Modèles.Models.Page
 {
-    public class LoginPage
+    public class LoginPage : Page
     {
-        private IBrowser _oBrowser;
-
         public ILink LoginLink
         {
-            get { return _oBrowser.Describe<ILink>(new LinkDescription
+            get { return Browser.Describe<ILink>(new LinkDescription
             {
                Id = @"pageHeader_loginView_lnkConnect",
                TagName = @"A"
@@ -25,7 +23,7 @@ namespace Modèles.Models
         {
             get
             {
-                return _oBrowser.Describe<IEditField>(new EditFieldDescription
+                return Browser.Describe<IEditField>(new EditFieldDescription
                 {
                     Id = @"loginCtrl_UcLoginConnect1_uiEditEmail"
                 });
@@ -36,7 +34,7 @@ namespace Modèles.Models
         {
             get
             {
-                return _oBrowser.Describe<IEditField>(new EditFieldDescription
+                return Browser.Describe<IEditField>(new EditFieldDescription
                 {
                     Id = @"loginCtrl_UcLoginConnect1_uiEditPassword",
                     TagName = @"INPUT",
@@ -49,7 +47,7 @@ namespace Modèles.Models
         {
             get
             {
-                return _oBrowser.Describe<IButton>(new ButtonDescription
+                return Browser.Describe<IButton>(new ButtonDescription
                 {
                     Id = @"loginCtrl_UcLoginConnect1_uiSubmitButton",
                     TagName = @"BUTTON",
@@ -60,7 +58,7 @@ namespace Modèles.Models
 
         public ILink CheckLogIn(string firstName, string lastName)
         {
-            ILink userWelcome = _oBrowser.Describe<ILink>(new LinkDescription
+            ILink userWelcome = Browser.Describe<ILink>(new LinkDescription
             {
                 ClassName = @"rmLink rmRootLink",
                 TagName = @"A",
@@ -68,29 +66,6 @@ namespace Modèles.Models
             });
 
             return userWelcome;
-        }
-
-        public ILink RegisteredUser
-        {
-            get
-            {
-                return _oBrowser.Describe<ILink>(new LinkDescription
-                {
-                    ClassName = @"rmLink rmRootLink",
-                    TagName = @"A",
-                    InnerText = @"^Bonjour\s"
-                });
-            }
-        }
-
-        /// <summary>
-        /// IMPORTANT: Needs to be done before the properties are used.
-        /// Gets the current browser from the tests.
-        /// </summary>
-        /// <param name="currentBrowser">Browser used for the tests</param>
-        public void GetCurrentBrowser(IBrowser currentBrowser)
-        {
-            _oBrowser = currentBrowser;
         }
     }
 }
