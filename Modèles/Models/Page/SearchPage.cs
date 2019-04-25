@@ -47,5 +47,39 @@ namespace Modèles.Models.Page
                 });
             }
         }
+
+        private ITable ResultsTable
+        {
+            get
+            {
+                return Browser.Describe<ITable>(new TableDescription
+                {
+                    Id = @"ctl04_rpTopResults_ctl00_ctTop_lsProducts",
+                    TagName = @"TABLE"
+                });
+            }
+        }
+
+        public ILink CheckSearchResultTitle()
+        {
+            ILink firstResultLink = ResultsTable.Describe<ILink>(new LinkDescription
+            {
+                TagName = @"A",
+                Id = @"ctl04_rpTopResults_ctl00_ctTop_lsProducts_ctl00_mProduct_lnkTitle"
+            });
+
+            return firstResultLink;
+        }
+
+        public IWebElement CheckSearchResultAuthor()
+        {
+            IWebElement firstResultLink = ResultsTable.Describe<IWebElement>(new WebElementDescription
+            {
+                TagName = @"SPAN",
+                Id = @"ctl04_rpTopResults_ctl00_ctTop_lsProducts_ctl00_mProduct_lblAuthor"
+            });
+
+            return firstResultLink;
+        }
     }
 }
