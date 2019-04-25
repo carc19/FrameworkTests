@@ -12,7 +12,7 @@ namespace Tests.Tests
     [TestFixture, Order(2)]
     public class SearchTest : UnitTestClassBase
     {
-        private const string SEARCH_WORD = "Space";
+        private const string SEARCH_WORD = "Nasa";
 
         private SearchPage sp = new SearchPage();
 
@@ -54,31 +54,14 @@ namespace Tests.Tests
             IWebElement firstProductAuthor = null;
 
             SolutionBrowser._browser.Sync();
-            firstProductTitle = sp.CheckSearchResultTitle();
+            firstProductTitle = sp.FirstProductLink;
             firstProductAuthor = sp.CheckSearchResultAuthor();
 
-            if (firstProductTitle != null)
-            {
-                string innerText = firstProductTitle.InnerText;
-
-                var match = Regex.Match(innerText, SEARCH_WORD, RegexOptions.IgnoreCase);
-
-                if (!match.Success)
-                    successTitle = false;
-            }
-
-            if (firstProductAuthor != null)
-            {
-                string innerText = firstProductAuthor.InnerText;
-
-                var match = Regex.Match(innerText, SEARCH_WORD, RegexOptions.IgnoreCase);
-
-                if (!match.Success)
-                    successAuthor = false;
-            }
+            successTitle = CheckFunctions.CompareSearchResult(SEARCH_WORD, firstProductTitle);
+            successAuthor = CheckFunctions.CompareSearchResult(SEARCH_WORD, firstProductAuthor);
 
             if (!successAuthor && !successTitle)
-                Assert.Fail("The first product was not found.");
+                Assert.Fail("The first product was unrelated to the search.");
         }
 
         [TearDown]

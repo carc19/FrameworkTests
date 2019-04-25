@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Modèles.Models.Page
 {
-    public class SearchPage : Page
+    public class SearchPage : Result
     {
         public IEditField SearchEditField
         {
@@ -33,29 +33,6 @@ namespace Modèles.Models.Page
                     ButtonType = @"submit"
                 });
             }
-        }
-
-        private ITable ResultsTable
-        {
-            get
-            {
-                return Browser.Describe<ITable>(new TableDescription
-                {
-                    Id = @"ctl04_rpTopResults_ctl00_ctTop_lsProducts",
-                    TagName = @"TABLE"
-                });
-            }
-        }
-
-        public ILink CheckSearchResultTitle()
-        {
-            ILink firstResultLink = ResultsTable.Describe<ILink>(new LinkDescription
-            {
-                TagName = @"A",
-                Id = @"ctl04_rpTopResults_ctl00_ctTop_lsProducts_ctl00_mProduct_lnkTitle"
-            });
-
-            return firstResultLink;
         }
 
         public IWebElement CheckSearchResultAuthor()
