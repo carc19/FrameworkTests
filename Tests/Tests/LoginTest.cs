@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 
 namespace Tests.Tests
 {
-    [TestFixture]
+    [TestFixture, Order(1)]
     public class LoginTest : UnitTestClassBase
     {
         private const string FILE_PATH = @"C:\Users\carel\Desktop\Stage\InfoAccounts.xlsx";
@@ -26,7 +26,8 @@ namespace Tests.Tests
         public void TestFixtureSetUp()
         {
             // Setup once per fixture
-            SolutionBrowser.LaunchBrowser();
+            if (SolutionBrowser._browser == null)
+                SolutionBrowser.LaunchBrowser();
         }
 
         [SetUp]
@@ -73,13 +74,19 @@ namespace Tests.Tests
         public void CheckLogIn()
         {
             SolutionBrowser._browser.Sync();
+            ILink userWelcome = lp.CheckLogIn(FIRSTNAME, LASTNAME);
 
-            string welcome = lp.CheckLogIn(FIRSTNAME, LASTNAME).InnerText;
-            var regex = "^Bonjour\\s" + user.FirstName + "\\s" + LASTNAME;
+            if (userWelcome != null)
+            {
+                string welcome = userWelcome.InnerText;
+                var regex = "^Bonjour\\s" + user.FirstName + "\\s" + LASTNAME;
 
-            var match = Regex.Match(welcome, regex, RegexOptions.IgnoreCase);
+                var match = Regex.Match(welcome, regex, RegexOptions.IgnoreCase);
 
-            if (!match.Success)
+                if (!match.Success)
+                    Assert.Fail("The LogIn was not successful.");
+            }
+            else
                 Assert.Fail("The LogIn was not successful.");
         }
 

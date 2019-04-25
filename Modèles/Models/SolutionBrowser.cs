@@ -9,12 +9,14 @@ namespace Modèles.Models
 {
     static public class SolutionBrowser
     {
+        public const string BROWSER_URL = "http://www.renaud-bray.com";
+
         static public IBrowser _browser;
 
         public static void LaunchBrowser()
         {
             _browser = BrowserFactory.Launch(BrowserType.InternetExplorer);
-            _browser.Navigate("http://www.renaud-bray.com");
+            _browser.Navigate(BROWSER_URL);
         }
     }
 }

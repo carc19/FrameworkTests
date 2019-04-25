@@ -2,16 +2,22 @@
 using NUnit.Framework;
 using HP.LFT.SDK;
 using HP.LFT.Verifications;
+using Modèles.Models.Page;
+using Modèles.Models;
 
 namespace Tests.Tests
 {
-    [TestFixture]
+    [TestFixture, Order(2)]
     public class SearchTest : UnitTestClassBase
     {
+        private SearchPage sp = new SearchPage();
+
         [OneTimeSetUp]
         public void TestFixtureSetUp()
         {
             // Setup once per fixture
+            if (SolutionBrowser._browser == null)
+                SolutionBrowser.LaunchBrowser();
         }
 
         [SetUp]
@@ -20,9 +26,18 @@ namespace Tests.Tests
             // Before each test
         }
 
-        [Test]
-        public void Test()
+        [Test, Order(1)]
+        public void SearchSet()
         {
+            SolutionBrowser._browser.Sync();
+            sp.SearchEditField.SetValue("Space");
+        }
+
+        [Test, Order(2)]
+        public void SearchButtonClick()
+        {
+            SolutionBrowser._browser.Sync();
+            sp.SearchButton.Click();
         }
 
         [TearDown]

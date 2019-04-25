@@ -11,12 +11,15 @@ namespace Modèles.Models.Page
     {
         public ILink LoginLink
         {
-            get { return Browser.Describe<ILink>(new LinkDescription
+            get
             {
-               Id = @"pageHeader_loginView_lnkConnect",
-               TagName = @"A"
-            });
-            ;}
+                return Browser.Describe<ILink>(new LinkDescription
+                {
+                    Id = @"pageHeader_loginView_lnkConnect",
+                    TagName = @"A"
+                });
+                ;
+            }
         }
 
         public IEditField UsernameEditField
@@ -58,12 +61,21 @@ namespace Modèles.Models.Page
 
         public ILink CheckLogIn(string firstName, string lastName)
         {
-            ILink userWelcome = Browser.Describe<ILink>(new LinkDescription
+            ILink userWelcome = null;
+
+            try
             {
-                ClassName = @"rmLink rmRootLink",
-                TagName = @"A",
-                InnerText = @"Bonjour " + firstName + " " + lastName
-            });
+                userWelcome = Browser.Describe<ILink>(new LinkDescription
+                {
+                    ClassName = @"rmLink rmRootLink",
+                    TagName = @"A",
+                    InnerText = @"Bonjour " + firstName + " " + lastName
+                });
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
 
             return userWelcome;
         }
