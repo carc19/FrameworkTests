@@ -77,6 +77,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Shared.cs" />
+    <Compile Include="Tests\AdvancedSearchTest.cs" />
     <Compile Include="Tests\LoginTest.cs" />
     <Compile Include="Tests\SearchTest.cs" />
     <Compile Include="UnitTestClassBase.cs" />

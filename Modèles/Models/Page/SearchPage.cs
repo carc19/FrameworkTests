@@ -35,19 +35,6 @@ namespace Modèles.Models.Page
             }
         }
 
-        public IEditField CategoriesEditField
-        {
-            get
-            {
-                return Browser.Describe<IEditField>(new EditFieldDescription
-                {
-                    Id = @"pageSearch_rcbCategory_Input",
-                    TagName = @"INPUT",
-                    Type = "text"
-                });
-            }
-        }
-
         private ITable ResultsTable
         {
             get

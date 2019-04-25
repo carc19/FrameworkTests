@@ -42,8 +42,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Page\AdvancedSearchPage.cs" />
     <Compile Include="Models\Excel.cs" />
     <Compile Include="Models\Page\Page.cs" />
+    <Compile Include="Models\Page\ProductPage.cs" />
     <Compile Include="Models\SolutionBrowser.cs" />
     <Compile Include="Models\Page\LoginPage.cs" />
     <Compile Include="Models\Page\SearchPage.cs" />

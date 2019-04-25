@@ -12,7 +12,7 @@ namespace Tests.Tests
     [TestFixture, Order(2)]
     public class SearchTest : UnitTestClassBase
     {
-        private const string SEARCH_WORD = "nasa";
+        private const string SEARCH_WORD = "Space";
 
         private SearchPage sp = new SearchPage();
 
