@@ -45,5 +45,65 @@ namespace Modèles.Models.Page
                 });
             }
         }
+
+        public IWebElement Editor
+        {
+            get
+            {
+                return Browser.Describe<IWebElement>(new WebElementDescription
+                {
+                    TagName = @"SPAN",
+                    Id = @"ctl09_ctl01_mz1Div_ctl00_ctl00_lblEditorInfo"
+                });
+            }
+        }
+
+        public IWebElement Collection
+        {
+            get
+            {
+                return Browser.Describe<IWebElement>(new WebElementDescription
+                {
+                    TagName = @"SPAN",
+                    Id = @"ctl09_ctl01_mz1Div_ctl00_ctl00_lblCollectionInfo"
+                });
+            }
+        }
+
+        public IWebElement Subject
+        {
+            get
+            {
+                return Browser.Describe<IWebElement>(new WebElementDescription
+                {
+                    TagName = @"SPAN",
+                    Id = @"ctl09_ctl01_mz1Div_ctl00_ctl00_lblSubjectInfo"
+                });
+            }
+        }
+
+        public IWebElement ISBN
+        {
+            get
+            {
+                return Browser.Describe<IWebElement>(new WebElementDescription
+                {
+                    TagName = @"SPAN",
+                    Id = @"ctl09_ctl01_mz1Div_ctl00_ctl00_lblISBNInfo"
+                });
+            }
+        }
+
+        public IWebElement RBCode
+        {
+            get
+            {
+                return Browser.Describe<IWebElement>(new WebElementDescription
+                {
+                    TagName = @"SPAN",
+                    Id = @"ctl09_ctl01_mz1Div_ctl00_ctl00_lblRerenceInfo"
+                });
+            }
+        }
     }
 }

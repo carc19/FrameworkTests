@@ -13,8 +13,13 @@ namespace Tests.Tests
     public class AdvancedSearchTest : UnitTestClassBase
     {
         private const string MOT_TEST = "Test";
-        private const string AUTHOR = "";
+        private const string AUTHOR = "J K Rowling";
         private const string TITLE = "Harry Potter";
+        private const string EDITOR = "Gallimard";
+        private const string COLLECTION = "Folio Junior";
+        private const string SUBJECT = "FICTION";
+        private const string ISBN = "9782070584628";
+        private const string RBCODE = "12768353";
 
         AdvancedSearchPage asp = new AdvancedSearchPage();
         ProductPage pp = new ProductPage();
@@ -43,6 +48,7 @@ namespace Tests.Tests
         [Test, Order(2)]
         public void FillTitle()
         {
+            SolutionBrowser._browser.Sync();
             asp.TitleEditField.SetValue(TITLE);
         }
 
@@ -55,55 +61,55 @@ namespace Tests.Tests
         [Test, Order(4)]
         public void FillCollection()
         {
-            //asp.CollectionEditField.SetValue(MOT_TEST);
+            asp.CollectionEditField.SetValue(COLLECTION);
         }
 
         [Test, Order(5)]
         public void FillSubject()
         {
-            //asp.SubjectEditField.SetValue(MOT_TEST);
+            asp.SubjectEditField.SetValue(SUBJECT);
         }
 
         [Test, Order(6)]
         public void FillEditor()
         {
-            //asp.EditorEditField.SetValue(MOT_TEST);
+            asp.EditorEditField.SetValue(EDITOR);
         }
 
         [Test, Order(7)]
         public void FillISBN()
         {
-            //asp.ISBN_EAN13_EditField.SetValue(MOT_TEST);
+            asp.ISBN_EAN13_EditField.SetValue(ISBN);
         }
 
         [Test, Order(8)]
         public void FillRBCode()
         {
-            //asp.RBCodeEditField.SetValue(MOT_TEST);
+            asp.RBCodeEditField.SetValue(RBCODE);
         }
 
         [Test, Order(9)]
         public void SelectDates()
         {
-            //asp.SetDates((int)Shared.Months.JAN, 2016, (int)Shared.Months.DEC, 2019);
+            asp.SetDates((int)Shared.Months.JAN, 2016, (int)Shared.Months.DEC, 2019);
         }
 
         [Test, Order(10)]
         public void SelectCategories()
         {
-            //asp.SelectCategory((int)Shared.Categories.Books);
+            asp.SelectCategory((int)Shared.Categories.Books);
         }
 
         [Test, Order(11)]
         public void CheckCoupsCoeur()
         {
-            //asp.CoupsCoeurCheckBox.Set(true);
+            asp.CoupsCoeurCheckBox.Set(true);
         }
 
         [Test, Order(12)]
         public void CheckEnglishOnly()
         {
-            //asp.ExcludeEnglishCheckBox.Set(true);
+            asp.ExcludeEnglishCheckBox.Set(true);
         }
 
         [Test, Order(13)]
@@ -148,10 +154,70 @@ namespace Tests.Tests
             SolutionBrowser._browser.Sync();
 
             bool success = true;
-            success = CheckFunctions.CompareReleaseDate((int)Shared.Months.JAN, 2019, (int)Shared.Months.APR, 2019, pp.ReleaseDate);
+            success = CheckFunctions.CompareReleaseDate((int)Shared.Months.JAN, 2015, (int)Shared.Months.APR, 2019, pp.ReleaseDate);
 
             if (!success)
                 Assert.Fail("The release date from the search doesn't correspond with the start and end date.");
+        }
+
+        [Test, Order(18)]
+        public void CheckEditor()
+        {
+            SolutionBrowser._browser.Sync();
+
+            bool success = true;
+            success = CheckFunctions.CompareSearchResult(EDITOR, pp.Editor);
+
+            if (!success)
+                Assert.Fail("The editor from this product doesn't correspond to the one from the search.");
+        }
+
+        [Test, Order(19)]
+        public void CheckCollection()
+        {
+            SolutionBrowser._browser.Sync();
+
+            bool success = true;
+            success = CheckFunctions.CompareSearchResult(COLLECTION, pp.Collection);
+
+            if (!success)
+                Assert.Fail("The collection from this product doesn't correspond to the one searched.");
+        }
+
+        [Test, Order(20)]
+        public void CheckSubject()
+        {
+            SolutionBrowser._browser.Sync();
+
+            bool success = true;
+            success = CheckFunctions.CompareSearchResult(SUBJECT, pp.Subject);
+
+            if (!success)
+                Assert.Fail("This product's subject doesn't correspond to the one searched.");
+        }
+
+        [Test, Order(21)]
+        public void CheckISBN()
+        {
+            SolutionBrowser._browser.Sync();
+
+            bool success = true;
+            success = CheckFunctions.CompareSearchResult(ISBN, pp.ISBN);
+
+            if (!success)
+                Assert.Fail("This product's ISBN doesn't correspond to the one searched.");
+        }
+
+        [Test, Order(22)]
+        public void CheckRBCode()
+        {
+            SolutionBrowser._browser.Sync();
+
+            bool success = true;
+            success = CheckFunctions.CompareSearchResult(RBCODE, pp.RBCode);
+
+            if (!success)
+                Assert.Fail("This product's Renaud-Bray code doesn't correspond to the one searched.");
         }
 
         [TearDown]

@@ -29,6 +29,7 @@ namespace Modèles.Models
                 {
                     TagName = @"A",
                     Id = @"ctl04_rpTopResults_ctl00_ctTop_lsProducts_ctl00_mProduct_lnkTitle"
+                    //ctl04_rpResultsList_ctl00_p_lnkTitle // Lorsqu'il y a un seul produit
                 });
             }
         }
