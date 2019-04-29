@@ -12,14 +12,17 @@ namespace Tests.Tests
     [TestFixture, Order(3)]
     public class AdvancedSearchTest : UnitTestClassBase
     {
-        private const string MOT_TEST = "Test";
-        private const string AUTHOR = "J K Rowling";
+        private const string AUTHOR = "";
         private const string TITLE = "Harry Potter";
         private const string EDITOR = "Gallimard";
-        private const string COLLECTION = "Folio Junior";
-        private const string SUBJECT = "FICTION";
-        private const string ISBN = "9782070584628";
-        private const string RBCODE = "12768353";
+        private const string COLLECTION = "folio junior";
+        private const string SUBJECT = "";
+        private const string ISBN = "";
+        private const string RBCODE = "";
+        private const int START_MONTH = (int)Shared.Months.JAN;
+        private const int START_YEAR = 2016;
+        private const int END_MONTH = (int)Shared.Months.APR;
+        private const int END_YEAR = 2019;
 
         AdvancedSearchPage asp = new AdvancedSearchPage();
         ProductPage pp = new ProductPage();
@@ -91,7 +94,7 @@ namespace Tests.Tests
         [Test, Order(9)]
         public void SelectDates()
         {
-            asp.SetDates((int)Shared.Months.JAN, 2016, (int)Shared.Months.DEC, 2019);
+            asp.SetDates(START_MONTH, START_YEAR, END_MONTH, END_YEAR);
         }
 
         [Test, Order(10)]
@@ -121,7 +124,7 @@ namespace Tests.Tests
         [Test, Order(14)]
         public void FirstResultClick()
         {
-            result.FirstProductLink.Click();
+            result.FirstProductClick();
         }
 
         [Test, Order(15)]
@@ -132,8 +135,8 @@ namespace Tests.Tests
             bool success = true;
             success = CheckFunctions.CompareSearchResult(AUTHOR, pp.AuthorLink);
 
-            if(!success)
-                    Assert.Fail("The author specified in the search is not the same as the one for the selected product.");
+            if (!success)
+                Assert.Fail("The author specified in the search is not the same as the one for the selected product.");
         }
 
         [Test, Order(16)]
@@ -154,7 +157,7 @@ namespace Tests.Tests
             SolutionBrowser._browser.Sync();
 
             bool success = true;
-            success = CheckFunctions.CompareReleaseDate((int)Shared.Months.JAN, 2015, (int)Shared.Months.APR, 2019, pp.ReleaseDate);
+            success = CheckFunctions.CompareReleaseDate(START_MONTH, START_YEAR, END_MONTH, END_YEAR, pp.ReleaseDate);
 
             if (!success)
                 Assert.Fail("The release date from the search doesn't correspond with the start and end date.");

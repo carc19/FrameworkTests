@@ -105,5 +105,30 @@ namespace Modèles.Models.Page
                 });
             }
         }
+
+        public ILink AddToCart
+        {
+            get
+            {
+                return Browser.Describe<ILink>(new LinkDescription
+                {
+                    TagName = @"A",
+                    Id = @"ctl09_ctl01_mz1Div_ctl00_ctl00_mc_lnkCart"
+                });
+            }
+        }
+
+        public IEditField Quantity
+        {
+            get
+            {
+                return Browser.Describe<IEditField>(new EditFieldDescription
+                {
+                    TagName = @"INPUT",
+                    Type = @"text",
+                    Id = @"ctl09_ctl01_mz1Div_ctl00_ctl00_mc_txtQty_adv2"
+                });
+            }
+        }
     }
 }
