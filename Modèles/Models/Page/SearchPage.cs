@@ -9,6 +9,7 @@ namespace Modèles.Models.Page
 {
     public class SearchPage : Result
     {
+        #region Propriétés
         public IEditField SearchEditField
         {
             get
@@ -35,6 +36,30 @@ namespace Modèles.Models.Page
             }
         }
 
+        public IWebElement SearchCategories
+        {
+            //get
+            //{
+            //    return Browser.Describe<IEditField>(new EditFieldDescription
+            //    {
+            //        TagName = @"INPUT",
+            //        Type = @"text",
+            //        Id = @"pageSearch_rcbCategory_Input"
+            //    });
+            //}
+
+            get
+            {
+                return Browser.Describe<IWebElement>(new WebElementDescription
+                {
+                    TagName = @"INPUT",
+                    Id = @"pageSearch_rcbCategory_Input",
+                });
+            }
+        }
+        #endregion
+
+        #region Méthodes
         public IWebElement CheckSearchResultAuthor()
         {
             IWebElement firstResultLink = ResultsTable.Describe<IWebElement>(new WebElementDescription
@@ -45,5 +70,6 @@ namespace Modèles.Models.Page
 
             return firstResultLink;
         }
+        #endregion
     }
 }

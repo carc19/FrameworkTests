@@ -7,6 +7,8 @@ using Modèles.Models.Page;
 using HP.LFT.SDK.Web;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Drawing;
+using Tests.Extensions;
 
 namespace Tests.Tests
 {
@@ -17,7 +19,7 @@ namespace Tests.Tests
         private const string SITE = "Renaud-Bray";
         private const string FIRSTNAME = "Test";
         private const string LASTNAME = "Stage";
-        
+
         LoginPage lp = new LoginPage();
         Excel excel = new Excel();
         User user = new User();
@@ -25,9 +27,13 @@ namespace Tests.Tests
         [OneTimeSetUp]
         public void TestFixtureSetUp()
         {
-            // Setup once per fixture
-            if (SolutionBrowser._browser == null)
-                SolutionBrowser.LaunchBrowser();
+            ReporterWrapper.ReporterContext("Launch browser", () =>
+            {
+                if (SolutionBrowser._browser == null)
+                    SolutionBrowser.LaunchBrowser();
+
+                VerifyWrapper.IsNotNull(SolutionBrowser._browser, "Check Browser", "Open and launch browser if it hasn't been already done.");
+            });
         }
 
         [SetUp]
@@ -40,54 +46,88 @@ namespace Tests.Tests
         public void LoginLinkClick()
         {
             SolutionBrowser._browser.Sync();
-            lp.LoginLink.Click();
+
+            ReporterWrapper.ReporterContext("Click on login link", () =>
+            {
+                lp.LoginLink.Click();
+                SolutionBrowser._browser.Sync();
+
+                VerifyWrapper.IsMatch(SolutionBrowser._browser.URL, "login", "Navigate to login page", "Click on link to navigate to the login page", SolutionBrowser.GetSnapshot());
+            });
         }
 
         [Test, Order(2)]
         public void GetUserInfos()
         {
             user = excel.GetUserFromName(FILE_PATH, SITE, FIRSTNAME, LASTNAME);
+
+            ReporterWrapper.ReporterContext("Get user information", () =>
+            {
+                // When the Password verification fails, the Email verification also fails, even though it's not empty.
+                VerifyWrapper.IsNotNullOrEmpty(user.Email, "Check if user contains email address", "Check if an email address was found in the excel file", null);
+                VerifyWrapper.IsNotNullOrEmpty(user.Pwd, "Check if user contains password", "Check if a password was found in the excel file", null);
+            });
         }
 
         [Test, Order(3)]
         public void UsernameSet()
         {
             SolutionBrowser._browser.Sync();
-            lp.UsernameEditField.SetValue(user.Email);
+
+            ReporterWrapper.ReporterContext("Set Username credentials", () =>
+            {
+                lp.UsernameEditField.SetValue(user.Email);
+                SolutionBrowser._browser.Sync();
+                VerifyWrapper.IsMatch(lp.UsernameEditField.Value, user.Email, "Set Username", "Check the UsernameEditField to make sure its value is the username extracted from the Excel file", SolutionBrowser.GetSnapshot());
+            });
         }
 
         [Test, Order(4)]
         public void PasswordSet()
         {
             SolutionBrowser._browser.Sync();
-            lp.PasswordEditField.SetValue(user.Pwd);
+
+            ReporterWrapper.ReporterContext("Set Password credentials", () =>
+            {
+                lp.PasswordEditField.SetValue(user.Pwd);
+                SolutionBrowser._browser.Sync();
+                VerifyWrapper.IsMatch(lp.PasswordEditField.Value, user.Pwd, "Set Password", "Check the PasswordEditField to make its value matches the one extracted from the Excel File.", SolutionBrowser.GetSnapshot());
+            });
         }
 
         [Test, Order(5)]
         public void LoginButtonClick()
         {
             SolutionBrowser._browser.Sync();
-            lp.LoginButton.Click();
+
+            ReporterWrapper.ReporterContext("Click on Login Button", () =>
+            {
+                lp.LoginButton.Click();
+                // Add Button Click Validation
+            });
         }
 
         [Test, Order(6)]
         public void CheckLogIn()
         {
             SolutionBrowser._browser.Sync();
-            ILink userWelcome = lp.CheckLogIn(FIRSTNAME, LASTNAME);
+            //ILink userWelcome = lp.CheckLogIn(FIRSTNAME, LASTNAME);
 
-            if (userWelcome != null)
-            {
-                string welcome = userWelcome.InnerText;
-                var regex = "^Bonjour\\s" + user.FirstName + "\\s" + LASTNAME;
+            var regex = "^Bonjour\\s" + user.FirstName + "\\s" + LASTNAME;
+            VerifyWrapper.IsMatch(lp.LoggedInLink.InnerText, regex, "Check log in status", "Check if we were able to log in with the Excel file credentials.", SolutionBrowser.GetSnapshot());
 
-                var match = Regex.Match(welcome, regex, RegexOptions.IgnoreCase);
+            //if (userWelcome != null)
+            //{
+            //    string welcome = userWelcome.InnerText;
+            //    var regex = "^Bonjour\\s" + user.FirstName + "\\s" + LASTNAME;
 
-                if (!match.Success)
-                    Assert.Fail("The LogIn was not successful.");
-            }
-            else
-                Assert.Fail("The LogIn was not successful.");
+            //    var match = Regex.Match(welcome, regex, RegexOptions.IgnoreCase);
+
+            //    if (!match.Success)
+            //        Assert.Fail("The LogIn was not successful.");
+            //}
+            //else
+            //    Assert.Fail("The LogIn was not successful.");
         }
 
         [TearDown]

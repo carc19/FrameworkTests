@@ -77,6 +77,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\Action.cs" />
+    <Compile Include="Extensions\ReporterWrapper.cs" />
+    <Compile Include="Extensions\VerifyWrapper.cs" />
     <Compile Include="Shared.cs" />
     <Compile Include="Tests\AdvancedSearchTest.cs" />
     <Compile Include="Tests\LoginTest.cs" />

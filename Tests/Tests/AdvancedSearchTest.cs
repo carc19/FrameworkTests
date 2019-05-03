@@ -6,6 +6,7 @@ using Modèles.Models;
 using Modèles.Models.Page;
 using HP.LFT.SDK.Web;
 using System.Text.RegularExpressions;
+using System.Drawing;
 
 namespace Tests.Tests
 {
@@ -13,9 +14,9 @@ namespace Tests.Tests
     public class AdvancedSearchTest : UnitTestClassBase
     {
         private const string AUTHOR = "";
-        private const string TITLE = "Harry Potter";
-        private const string EDITOR = "Gallimard";
-        private const string COLLECTION = "folio junior";
+        private const string TITLE = "Back to the future";
+        private const string EDITOR = "";
+        private const string COLLECTION = "";
         private const string SUBJECT = "";
         private const string ISBN = "";
         private const string RBCODE = "";
@@ -124,7 +125,21 @@ namespace Tests.Tests
         [Test, Order(14)]
         public void FirstResultClick()
         {
-            result.FirstProductClick();
+            Reporter.StartReportingContext("Select first result");
+            try
+            {
+                result.FirstProductClick();
+                Image img = SolutionBrowser._browser.GetSnapshot();
+                Reporter.ReportEvent("Select first product from search result.", "", HP.LFT.Report.Status.Passed, img);
+            }
+            catch (Exception ex)
+            {
+                Image img = SolutionBrowser._browser.GetSnapshot();
+                Reporter.ReportEvent("Select first product from search result.", ex.Message, HP.LFT.Report.Status.Failed, img);
+                Assert.Fail();
+            }
+
+            Reporter.EndReportingContext();
         }
 
         [Test, Order(15)]

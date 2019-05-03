@@ -4,6 +4,8 @@ using NUnit.Framework;
 using HP.LFT.Report;
 using HP.LFT.UnitTesting;
 using NUnit.Framework.Interfaces;
+using System.Drawing;
+using Modèles.Models;
 
 /// <summary>
 /// Runs before all classes and tests in the current project.

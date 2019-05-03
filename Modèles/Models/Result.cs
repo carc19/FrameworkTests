@@ -45,18 +45,6 @@ namespace Modèles.Models
             }
         }
 
-        //private ILink firstProductTopResults = SolutionBrowser._browser.Describe<ILink>(new LinkDescription
-        //{
-        //    TagName = @"A",
-        //    Id = @"ctl04_rpTopResults_ctl00_ctTop_lsProducts_ctl00_mProduct_lnkTitle"
-        //});
-
-        //private ILink firstProductResultsList = SolutionBrowser._browser.Describe<ILink>(new LinkDescription
-        //{
-        //    TagName = @"A",
-        //    Id = @"ctl04_rpResultsList_ctl00_p_lnkTitle"
-        //});
-
         public void FirstProductClick()
         {
             if (firstProductResultsList.Exists())
@@ -64,7 +52,7 @@ namespace Modèles.Models
             else if (firstProductTopResults.Exists())
                 firstProductTopResults.Click();
             else
-                throw new Exception("No result found.");
+                throw new Exception("No product found.");
         }
 
         public ILink FirstProductLink

@@ -12,9 +12,11 @@ namespace Tests.Tests
     [TestFixture, Order(2)]
     public class SearchTest : UnitTestClassBase
     {
-        private const string SEARCH_WORD = "Nasa";
+        private const string SEARCH_WORD = "Harry Potter";
 
         private SearchPage sp = new SearchPage();
+        private Result result = new Result();
+        private ProductPage pp = new ProductPage();
 
         [OneTimeSetUp]
         public void TestFixtureSetUp()
@@ -37,25 +39,28 @@ namespace Tests.Tests
             sp.SearchEditField.SetValue(SEARCH_WORD);
         }
 
-        [Test, Order(2)]
+        [Test, Order(3)]
         public void SearchButtonClick()
         {
             SolutionBrowser._browser.Sync();
             sp.SearchButton.Click();
         }
 
-        [Test, Order(3)]
+        [Test, Order(4)]
         public void CheckSearchResult()
         {
             bool successTitle = true;
             bool successAuthor = true;
 
-            ILink firstProductTitle = null;
+            IWebElement firstProductTitle = null;
             IWebElement firstProductAuthor = null;
 
             SolutionBrowser._browser.Sync();
-            firstProductTitle = sp.FirstProductLink;
-            firstProductAuthor = sp.CheckSearchResultAuthor();
+
+            result.FirstProductClick();
+
+            firstProductTitle = pp.Title;
+            firstProductAuthor = pp.AuthorLink;
 
             successTitle = CheckFunctions.CompareSearchResult(SEARCH_WORD, firstProductTitle);
             successAuthor = CheckFunctions.CompareSearchResult(SEARCH_WORD, firstProductAuthor);

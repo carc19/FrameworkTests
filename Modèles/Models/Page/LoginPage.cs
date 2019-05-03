@@ -59,6 +59,19 @@ namespace Modèles.Models.Page
             }
         }
 
+        public IWebElement LoggedInLink
+        {
+            get
+            {
+                return Browser.Describe<IWebElement>(new LinkDescription
+                {
+                    ClassName = @"rmText rmExpandDown",
+                    TagName = @"SPAN",
+                    InnerText = @"Bonjour"
+                });
+            }
+        }
+
         public ILink CheckLogIn(string firstName, string lastName)
         {
             ILink userWelcome = null;
